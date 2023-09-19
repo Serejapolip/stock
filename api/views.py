@@ -15,8 +15,8 @@ class UserModelViewSet(viewsets.ModelViewSet):
 
 
 class StockModelViewSet(viewsets.ModelViewSet):
-     queryset = Stock.objects.all()
-     serializer_class = StockSerializer
+    queryset = Stock.objects.all()
+    serializer_class = StockSerializer
 
 
 class ProductModelViewSet(viewsets.ModelViewSet):
@@ -29,38 +29,28 @@ class ProductModelViewSet(viewsets.ModelViewSet):
 
 
 class BusinessModelViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsCustumerOrReadOnly, )
+    permission_classes = (IsCustumerOrReadOnly,)
     queryset = Business.objects.none()
     serializer_class = BusinessSerializer
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
-
         serializer.is_valid(raise_exception=True)
-
         product_id = serializer.validated_data.get('product')
         quantity = serializer.validated_data.get('quantity')
-
         product = get_object_or_404(Product, id=product_id.id)
-
         if product.quantity < quantity:
             return Response(
                 {'error': 'Запрошенное количество товара превышает имеющееся на складе'},
                 status=status.HTTP_400_BAD_REQUEST
-            )
+                           )
         self.perform_create(serializer)
         product.quantity -= quantity
         product.save()
         headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-
+        return Response(serializer.data,
+                        status=status.HTTP_201_CREATED,
+                        headers=headers)
 
     def get_queryset(self):
         return Business.objects.filter(user=self.request.user.id)
-
-
-
-
-
-
-
