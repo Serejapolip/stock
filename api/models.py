@@ -6,15 +6,15 @@ class ApiUser(AbstractUser):
     user_type_choices = (
                         (1, 'Поставщик'),
                         (2, 'Потребитель'),
-                        )
+    )
     user_type = models.IntegerField()
 
     def __str__(self):
         return f"ID: {self.id}, " \
-               f"Имя пользователя: {self.username}, " \
-               f"Тип пользователя: " \
-               f"{self.user_type_choices[self.user_type][1]}, " \
-               f"email: {self.email} "
+            f"Имя пользователя: {self.username}, " \
+            f"Тип пользователя: " \
+            f"{self.user_type_choices[self.user_type][1]}, " \
+            f"email: {self.email} "
 
 
 class Stock(models.Model):
@@ -22,7 +22,7 @@ class Stock(models.Model):
 
     def __str__(self):
         return f"ID склада: {self.id}. " \
-               f"Название склада: {self.name} "
+            f"Название склада: {self.name} "
 
 
 class Product(models.Model):
@@ -37,10 +37,10 @@ class Product(models.Model):
 
     def __str__(self):
         return f"ID товара - {self.id}. " \
-               f"Наименование: {self.name}. " \
-               f"Количество: {self.quantity}. " \
-               f"Владелец: {self.owner.id}. " \
-               f"Склад: {self.stock}"
+            f"Наименование: {self.name}. " \
+            f"Количество: {self.quantity}. " \
+            f"Владелец: {self.owner.id}. " \
+            f"Склад: {self.stock}"
 
 
 class Business(models.Model):
@@ -51,9 +51,3 @@ class Business(models.Model):
                                 related_name="business_actions",
                                 on_delete=models.CASCADE)
     quantity = models.IntegerField()
-
-
-
-
-
-

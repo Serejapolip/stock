@@ -43,7 +43,7 @@ class BusinessModelViewSet(viewsets.ModelViewSet):
             return Response(
                 {'error': 'Запрошенное количество товара превышает имеющееся на складе'},
                 status=status.HTTP_400_BAD_REQUEST
-                           )
+            )
         self.perform_create(serializer)
         product.quantity -= quantity
         product.save()

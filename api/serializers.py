@@ -5,13 +5,13 @@ from api.models import ApiUser, Stock, Product, Business
 
 class UserSerializer(serializers.Serializer):
     username = serializers.CharField(max_length=128, validators=[
-                                        validators.UniqueValidator(ApiUser.objects.all())
-                                                                ]
-                                     )
+        validators.UniqueValidator(ApiUser.objects.all())
+    ]
+    )
     email = serializers.EmailField(validators=[
         validators.UniqueValidator(ApiUser.objects.all())
-                                              ]
-                                   )
+    ]
+    )
     password = serializers.CharField(min_length=6,
                                      max_length=20,
                                      write_only=True)
@@ -22,7 +22,7 @@ class UserSerializer(serializers.Serializer):
             email=validated_data["email"],
             username=validated_data["username"],
             user_type=validated_data['user_type']
-                                     )
+        )
         user.set_password(validated_data["password"])
         user.save(update_fields=["password"])
         return user
@@ -38,7 +38,7 @@ class StockSerializer(serializers.ModelSerializer):
 class ProductSerializer(serializers.ModelSerializer):
     owner = serializers.HiddenField(
         default=serializers.CurrentUserDefault()
-                                   )
+    )
 
     class Meta:
         model = Product

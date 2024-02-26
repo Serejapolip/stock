@@ -8,7 +8,6 @@ router.register('products', ProductModelViewSet)
 router.register('business', BusinessModelViewSet)
 
 
-
 urlpatterns = [
 
 ]
